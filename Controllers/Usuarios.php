@@ -11,7 +11,15 @@ class Usuarios extends Controller
         if (empty($_SESSION['activo'])) {
             header('Location: '.base_url);
         }
-        $this->views->getView($this, "index");
+        $data['tipoUsuarios'] = $this->model->getTiposUsuarios();
+        $this->views->getView($this, "index", $data);
+    }
+
+    public function listar()
+    {
+        $data = $this->model->getUsuarios();
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
     }
     
     public function validar()
@@ -39,6 +47,42 @@ class Usuarios extends Controller
                 $msg = "ok";
             } else {
                 $msg = "Usuario o contraseña incorrectas";
+            }
+        }
+        echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function registrar()
+    {
+        $nombre = $_POST['nombre'];
+        $apePat = $_POST['apePat'];
+        $apeMat = $_POST['apeMat'];
+        $usuario = $_POST['usuario'];
+        $clave = $_POST['clave'];
+        $confirmar = $_POST['confirmar'];
+        $tipoUsuario = $_POST['tipoUsuario'];
+        $id = $_POST['id'];
+
+        if (empty($nombre) || empty($apePat) || empty($apeMat) || empty($usuario) || empty($clave) || empty($confirmar) || empty($tipoUsuario)) {
+            $msg = "Todos los campos son obligatorios";
+        } else {
+            if ($id == "") {
+                if ($clave != $confirmar) {
+                    $msg = "Las contraseñas no coinciden";
+                } else {
+                    $hash = hash("SHA256", $clave);
+                    $data = $this->model->registrarUsuario($nombre, $apePat, $apeMat, $usuario, $hash, $tipoUsuario);
+                    if ($data == "ok") {
+                        $msg = "si";
+                    } else if ($data == "existe") {
+                        $msg = "El usuario ya existe";
+                    } else {
+                        $msg = "Error al registrar al nuevo usuario";
+                    }
+                }
+            } else {
+                // Si el $id contiene algo, se ejecutará la función de modificarUsuario()
             }
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);

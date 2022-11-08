@@ -32,11 +32,10 @@
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control text-center fw-bold" id="pass" name="clave" type="password" placeholder="Password" autocomplete="off"/>
-                                            <label for="pass" class="fw-bold"> <i class="fa-solid fa-key"></i> Contraseña</label>
+                                            <label for="pass" class="fw-bold"><i class="fa-solid fa-key"></i> Contraseña</label>
                                         </div>
                                         
                                         <div class="alert alert-danger text-center d-none" id="alerta" role="alert">
-                                            
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
