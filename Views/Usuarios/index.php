@@ -12,6 +12,7 @@
             <th>Usuario</th>
             <th>Tipo Usuario</th>
             <th>Fecha de ingreso</th>
+            <th>Acciones</th>
     </thead>
     <tbody>
     </tbody>
@@ -28,37 +29,41 @@
                 <form method="POST" id="frmUsuario">
                     <div class="form-group">
                         <div class="row" id="datosPersonales">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="nombre">Nombre</label>
                                 <input type="hidden" id="id" name="id">
-                                <input id="nombre" class="form-control text-center" type="text" name="nombre" placeholder="Nombre" autocomplete="off">
+                                <input id="nombre" class="form-control text-center fw-bold" type="text" name="nombre" placeholder="Nombre" autocomplete="off">
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="apePat">Apellido Paterno</label>
-                                <input id="apePat" class="form-control text-center" type="text" name="apePat" placeholder="Apellido Pat" autocomplete="off">
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="apeMat">Apellido Materno</label>
-                                <input type="text" id="apeMat" class="form-control text-center" name="apeMat" placeholder="Apellido Mat">
+                                <input id="apePat" class="form-control text-center fw-bold" type="text" name="apePat" placeholder="Apellido Paterno" autocomplete="off">
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="row" id="cuenta">
-                            <div class="col-md-4">
-                                <label for="usuario">Usuario</label>
-                                <input type="text" id="usuario" class="form-control text-center" name="usuario" placeholder="Usuario" autocomplete="off">
+                            <div class="col-md-6">
+                                <label for="apeMat">Apellido Materno</label>
+                                <input type="text" id="apeMat" class="form-control text-center fw-bold" name="apeMat" placeholder="Apellido Materno">
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
+                                <label for="usuario">Usuario</label>
+                                <input type="text" id="usuario" class="form-control text-center fw-bold" name="usuario" placeholder="Usuario" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row" id="claves">
+                            <div class="col-md-6">
                                 <label for="clave">Contraseña</label>
                                 <input type="password" id="clave" class="form-control text-center" name="clave" placeholder="Contraseña">
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="confirmar">Confirmar</label>
                                 <input type="password" id="confirmar" class="form-control text-center" name="confirmar" placeholder="Confirmar">
                             </div>
@@ -66,10 +71,10 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="row" id="tipoUsuario">
+                        <div class="row">
                             <div class="col-md-12">
                                 <label for="tipoUsuario">Tipo de Usuario</label>
-                                <select id="tipoUsuario" class="form-control text-center" name="tipoUsuario">
+                                <select id="tipoUsuario" class="form-control text-center fw-bold" name="tipoUsuario">
                                     <option selected="true" disabled="disabled">Seleccione una opcion</option>
                                     <?php foreach ($data['tipoUsuarios'] as $row) { ?>
 

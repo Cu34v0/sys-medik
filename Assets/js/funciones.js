@@ -27,6 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         data: "fechaAlta",
       },
+      {
+        data: "acciones",
+      },
     ],
   });
 });
@@ -47,16 +50,12 @@ function registrarUsuario(e) {
   const apePat = document.getElementById("apePat");
   const apeMat = document.getElementById("apeMat");
   const usuario = document.getElementById("usuario");
-  const clave = document.getElementById("clave");
-  const confirmar = document.getElementById("confirmar");
   const tipoUsuario = document.getElementById("tipoUsuario");
   if (
     nombre.value == "" ||
     apePat.value == "" ||
     apeMat.value == "" ||
     usuario.value == "" ||
-    clave.value == "" ||
-    confirmar.value == "" ||
     tipoUsuario == ""
   ) {
     Swal.fire({
@@ -84,6 +83,16 @@ function registrarUsuario(e) {
           frm.reset();
           $("#nuevo_usuario").modal("hide");
           tblUsuarios.ajax.reload();
+        } else if (res == "modificado") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Usuario modificado con éxito",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          $("#nuevo_usuario").modal("hide");
+          tblUsuarios.ajax.reload();
         } else {
           Swal.fire({
             position: "center",
@@ -96,4 +105,26 @@ function registrarUsuario(e) {
       }
     };
   }
+}
+
+function btnEditarUser(id) {
+  document.getElementById("title").innerHTML = "Actualizar Usuario";
+  document.getElementById("btnAccion").innerHTML = "Modificar";
+  const url = base_url + "Usuarios/editar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      document.getElementById("id").value = res.idUsuario;
+      document.getElementById("nombre").value = res.nombreU;
+      document.getElementById("apePat").value = res.apePat;
+      document.getElementById("apeMat").value = res.apeMat;
+      document.getElementById("usuario").value = res.usuario;
+      document.getElementById("tipoUsuario").value = res.idTipoUsuario;
+      document.getElementById("claves").classList.add("d-none");
+      $("#nuevo_usuario").modal("show");
+    }
+  };
 }

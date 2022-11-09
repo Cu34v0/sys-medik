@@ -18,6 +18,12 @@ class Usuarios extends Controller
     public function listar()
     {
         $data = $this->model->getUsuarios();
+        for ($i = 0; $i < count($data); $i++) {
+            $data[$i]['acciones'] = '<div>
+            <button class="btn btn-primary" type="button" onclick="btnEditarUser(' . $data[$i]['idUsuario'] . ');"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-danger" type="button" onclick="btnEliminarUser(' . $data[$i]['idUsuario'] . ')"><i class="fas fa-trash-alt"></i></button>
+            </div>';
+        }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -64,7 +70,7 @@ class Usuarios extends Controller
         $tipoUsuario = $_POST['tipoUsuario'];
         $id = $_POST['id'];
 
-        if (empty($nombre) || empty($apePat) || empty($apeMat) || empty($usuario) || empty($clave) || empty($confirmar) || empty($tipoUsuario)) {
+        if (empty($nombre) || empty($apePat) || empty($apeMat) || empty($usuario)  || empty($tipoUsuario)) {
             $msg = "Todos los campos son obligatorios";
         } else {
             if ($id == "") {
@@ -83,9 +89,22 @@ class Usuarios extends Controller
                 }
             } else {
                 // Si el $id contiene algo, se ejecutará la función de modificarUsuario()
+                $data = $this->model->modificarUsuario($nombre, $apePat, $apeMat, $usuario, $tipoUsuario, $id);
+                if ($data == "modificado") {
+                    $msg = "modificado";
+                }else {
+                    $msg = "Error al modificar el usuario";
+                }
             }
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function editar(int $id)
+    {
+        $data = $this->model->editarUser($id);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
 
@@ -95,4 +114,3 @@ class Usuarios extends Controller
         header('location: ' . base_url);
     }
 }
-?>
