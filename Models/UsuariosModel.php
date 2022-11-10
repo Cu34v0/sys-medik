@@ -82,4 +82,14 @@ class UsuariosModel extends Query
         $data = $this->select($sql);
         return $data;
     }
+
+    public function eliminarUser(int $id)
+    {
+        $this->id = $id;
+        $sql = "DELETE FROM users WHERE idUsuario = ?";
+        $datos = array($this->id);
+        $data = $this->save($sql, $datos);
+        return $data;
+
+    }
 }

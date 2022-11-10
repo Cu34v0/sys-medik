@@ -71,7 +71,7 @@ class Usuarios extends Controller
         $id = $_POST['id'];
 
         if (empty($nombre) || empty($apePat) || empty($apeMat) || empty($usuario)  || empty($tipoUsuario)) {
-            $msg = "Todos los campos son obligatorios";
+            $msg = "Todos los campos son obligatorios msg desde el backend";
         } else {
             if ($id == "") {
                 if ($clave != $confirmar) {
@@ -97,6 +97,7 @@ class Usuarios extends Controller
                 }
             }
         }
+        // Respuesta de la operación
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -105,6 +106,18 @@ class Usuarios extends Controller
     {
         $data = $this->model->editarUser($id);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function eliminar(int $id)
+    {
+        $data = $this->model->eliminarUser($id);
+        if ($data == 1) {
+            $msg = "ok";
+        }else {
+            $msg = "Error al eliminar el usuario";
+        }
+        echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
 

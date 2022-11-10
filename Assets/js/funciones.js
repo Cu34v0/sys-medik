@@ -50,6 +50,8 @@ function registrarUsuario(e) {
   const apePat = document.getElementById("apePat");
   const apeMat = document.getElementById("apeMat");
   const usuario = document.getElementById("usuario");
+  const clave = document.getElementById("clave");
+  const confirmar = document.getElementById("confirmar");
   const tipoUsuario = document.getElementById("tipoUsuario");
   if (
     nombre.value == "" ||
@@ -127,4 +129,35 @@ function btnEditarUser(id) {
       $("#nuevo_usuario").modal("show");
     }
   };
+}
+
+function btnEliminarUser(id) {
+  Swal.fire({
+    title: "¿Estás seguro de eliminar?",
+    text: "¡No podrás revertir esta acción!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, eliminar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = base_url + "Usuarios/eliminar/" + id;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if (res == "ok") {
+            Swal.fire("Eliminado!", "El usuario ha sido eliminado", "success");
+            tblUsuarios.ajax.reload();
+          } else {
+            Swal.fire("Error!", "res", "error");
+          }
+        }
+      };
+    }
+  });
 }
