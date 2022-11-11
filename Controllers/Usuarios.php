@@ -8,7 +8,7 @@ class Usuarios extends Controller
 
     public function index()
     {
-        if (empty($_SESSION['activo'])) {
+        if (empty($_SESSION['activo']) || ($_SESSION['tipoUsuario'] != 'Administrador')) {
             header('Location: '.base_url);
         }
         $data['tipoUsuarios'] = $this->model->getTiposUsuarios();
