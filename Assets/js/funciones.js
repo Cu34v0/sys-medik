@@ -161,3 +161,40 @@ function btnEliminarUser(id) {
     }
   });
 }
+
+function btnInformacionUser(id) {
+  document.getElementById("title").innerHTML = "Información Complementaria";
+  document.getElementById("btnAccion").innerHTML = "Modificar";
+  const url = base_url + "Usuarios/editar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      const idTipoUsuario = res.idTipoUsuario;
+      if (idTipoUsuario == 1) {
+        $("#info_admin").modal("show");
+      } else if (idTipoUsuario == 2) {
+        $("#info_medic").modal("show");
+      } else if (idTipoUsuario == 3) {
+        $("#info_paciente").modal("show");
+      }
+      // document.getElementById("idComplement").value = res.idUsuario;
+      // document.getElementById("tipoUsuarioComplement").value = res.idTipoUsuario;
+      
+    }
+  };
+}
+
+function registrarComplementoAdmin(e) {
+  e.preventDefault();
+}
+
+function registrarComplementoAdmin(e) {
+  e.preventDefault();
+}
+
+function registrarComplementoPaciente(e) {
+  e.preventDefault();
+}

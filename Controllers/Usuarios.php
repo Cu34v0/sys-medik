@@ -1,18 +1,20 @@
 <?php
 class Usuarios extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         session_start();
         parent::__construct();
     }
 
     public function index()
     {
-        if (empty($_SESSION['activo']) || ($_SESSION['tipoUsuario'] != 'Administrador')) {
-            header('Location: '.base_url);
+        if (($_SESSION['activo']) && $_SESSION['tipoUsuario'] == 'Administrador') {
+            $data['tipoUsuarios'] = $this->model->getTiposUsuarios();
+            $this->views->getView($this, "index", $data);
+        } else {
+            header('Location: ' . base_url);
         }
-        $data['tipoUsuarios'] = $this->model->getTiposUsuarios();
-        $this->views->getView($this, "index", $data);
     }
 
     public function listar()
@@ -22,12 +24,13 @@ class Usuarios extends Controller
             $data[$i]['acciones'] = '<div>
             <button class="btn btn-primary" type="button" onclick="btnEditarUser(' . $data[$i]['idUsuario'] . ');"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" type="button" onclick="btnEliminarUser(' . $data[$i]['idUsuario'] . ')"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-warning" type="button" onclick="btnInformacionUser(' . $data[$i]['idUsuario'] . ');"><i class="fas fa-plus"></i></button>
             </div>';
         }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-    
+
     public function validar()
     {
         if (empty($_POST['usuario']) || empty($_POST['clave'])) {
@@ -92,7 +95,7 @@ class Usuarios extends Controller
                 $data = $this->model->modificarUsuario($nombre, $apePat, $apeMat, $usuario, $tipoUsuario, $id);
                 if ($data == "modificado") {
                     $msg = "modificado";
-                }else {
+                } else {
                     $msg = "Error al modificar el usuario";
                 }
             }
@@ -114,7 +117,7 @@ class Usuarios extends Controller
         $data = $this->model->eliminarUser($id);
         if ($data == 1) {
             $msg = "ok";
-        }else {
+        } else {
             $msg = "Error al eliminar el usuario";
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
