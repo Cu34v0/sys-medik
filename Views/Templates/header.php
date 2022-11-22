@@ -46,10 +46,27 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="<?php echo base_url ?>Usuarios">
+                        <a class="nav-link text-success" href="<?php echo base_url ?>Usuarios">
                             <div class="fa-solid fa-user mx-2"><i class="fas fa-tachometer-alt"></i></div>
                             Usuarios
                         </a>
+
+
+                        <a class="nav-link collapsed text-success" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-toolbox text-success"></i></div>
+                            Perfiles
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link text-success" href="<?php echo base_url ?>PerfilesAdministradores"><i class="fa-solid fa-screwdriver-wrench mx-2"></i>Administradores</a>
+                                <a class="nav-link text-success" href="<?php echo base_url ?>PerfilesMedicos"><i class="fa-solid fa-user-doctor mx-2"></i>Médicos</a>
+                                <a class="nav-link text-success" href="<?php echo base_url ?>PerfilesPacientes"><i class="fa-solid fa-hospital-user mx-2"></i>Pacientes</a>
+                            </nav>
+                        </div>
+
+                        <!-- Aquí irán los siguientes elementos -->
+
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">

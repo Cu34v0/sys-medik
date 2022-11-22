@@ -24,7 +24,6 @@ class Usuarios extends Controller
             $data[$i]['acciones'] = '<div>
             <button class="btn btn-primary" type="button" onclick="btnEditarUser(' . $data[$i]['idUsuario'] . ');"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" type="button" onclick="btnEliminarUser(' . $data[$i]['idUsuario'] . ')"><i class="fas fa-trash-alt"></i></button>
-            <button class="btn btn-warning" type="button" onclick="btnInformacionUser(' . $data[$i]['idUsuario'] . ');"><i class="fas fa-plus"></i></button>
             </div>';
         }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);

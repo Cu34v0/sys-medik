@@ -46,7 +46,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="apeMat">Apellido Materno</label>
-                                <input type="text" id="apeMat" class="form-control text-center fw-bold" name="apeMat" placeholder="Apellido Materno">
+                                <input type="text" id="apeMat" class="form-control text-center fw-bold" name="apeMat" placeholder="Apellido Materno" autocomplete="off">
                             </div>
 
                             <div class="col-md-6">
@@ -95,94 +95,4 @@
         </div>
     </div>
 </div>
-
-
-<!-- Formulario flotante para administrador -->
-<div id="info_admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-success justify-content-center">
-                <h5 class="modal-title text-white" id="title">Información Complementaria de Administrador</h5>
-            </div>
-            <div class="modal-body text-center">
-                <form method="POST" id="frmAdminComplemento">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="fechaNacAdmin">Fecha de Nacimiento</label>
-                                <input type="hidden" id="idComplementAdmin" name="idComplementAdmin">
-                                <input type="hidden" id="tipoUsuarioComplementAdmin" name="tipoUsuarioComplementAdmin">
-                                <input id="fechaNacAdmin" class="form-control text-center fw-bold" type="date" name="fechaNacAdmin" placeholder="Fecha de Nacimiento" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                        <button class="btn btn-success" type="button" onclick="registrarComplementoAdmin(event);" id="btnAccionComplementAdmin">Complementar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Formulario flotante para medico -->
-<div id="info_medic" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-success justify-content-center">
-                <h5 class="modal-title text-white" id="title">Información Complementaria de Doctor</h5>
-            </div>
-            <div class="modal-body text-center">
-                <form method="POST" id="frmDoctorComplemento">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="fechaNacMedico">Fecha de Nacimiento</label>
-                                <input type="hidden" id="idComplementMedico" name="idComplementMedico">
-                                <input type="hidden" id="tipoUsuarioComplementMedico" name="tipoUsuarioComplementMedico">
-                                <input id="fechaNacMedico" class="form-control text-center fw-bold" type="date" name="fechaNacMedico" placeholder="Fecha de Nacimiento" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                        <button class="btn btn-success" type="button" onclick="registrarComplementoMedico(event);" id="btnAccionComplementMedico">Complementar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Formulario flotante para paciente -->
-<div id="info_paciente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-success justify-content-center">
-                <h5 class="modal-title text-white" id="title">Información Complementaria de Paciente</h5>
-            </div>
-            <div class="modal-body text-center">
-                <form method="POST" id="frmPacienteComplemento">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="nombre">Fecha de Nacimiento</label>
-                                <input type="hidden" id="idComplementPaciente" name="idComplementPaciente">
-                                <input type="hidden" id="tipoUsuarioComplementPaciente" name="tipoUsuarioComplementPaciente">
-                                <input id="fechaNacPaciente" class="form-control text-center fw-bold" type="date" name="fechaNac" placeholder="Fecha de Nacimiento" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                        <button class="btn btn-success" type="button" onclick="registrarComplementoPaciente(event);" id="btnAccionComplementPaciente">Complementar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <?php include "Views/Templates/footer.php"; ?>

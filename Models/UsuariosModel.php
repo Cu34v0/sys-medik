@@ -44,7 +44,29 @@ class UsuariosModel extends Query
             $datos = array($this->nombre, $this->apePat, $this->apeMat, $this->usuario, $this->clave, $this->tipoUsuario);
             $data = $this->save($sql, $datos);
 
-            if ($data == 1) {
+            $idUsuarioQuery = "SELECT idUsuario FROM users WHERE usuario = '$this->usuario'";
+            $idUsuario = $this->select($idUsuarioQuery);
+
+            switch ($tipoUsuario) {
+                case 1:
+                    $sql2 = "INSERT INTO infoAdmin (idUsuario) VALUES (?)";
+                    $datos2 = array($idUsuario["idUsuario"]);
+                    $data2 = $this->save($sql2, $datos2);
+                    break;
+                case 2:
+                    $sql2 = "INSERT INTO infoDoc (idUsuario) VALUES (?)";
+                    $datos2 = array($idUsuario["idUsuario"]);
+                    $data2 = $this->save($sql2, $datos2);
+                    break;
+                case 3:
+                    $sql2 = "INSERT INTO infoPaci (idUsuario) VALUES (?)";
+                    $datos2 = array($idUsuario["idUsuario"]);
+                    $data2 = $this->save($sql2, $datos);
+                    break;
+            }
+
+
+            if ($data == 1 and $data2 == 1) {
                 $res = "ok";
             } else {
                 $res = "error";
@@ -63,6 +85,53 @@ class UsuariosModel extends Query
         $this->apeMat = $apeMat;
         $this->usuario = $usuario;
         $this->tipoUsuario = $tipoUsuario;
+
+        // Verifico el TipoUsuario al cual pertenece el id de modificación
+        $idTipoUsuarioQuery = "SELECT idTipoUsuario FROM users WHERE idUsuario = '$this->id'";
+        $idTipoUsuario = $this->select($idTipoUsuarioQuery);
+
+        // Primero, compaero si el ID obtenido es diferente al ID que vienen en los campos a cambiar
+        if ($tipoUsuario != $idTipoUsuario['idTipoUsuario']) {
+            switch ($idTipoUsuario['idTipoUsuario']) {
+                case 1:
+                    // Primero elimino el registro que ya estaba en la tabla
+                    $sql = "DELETE FROM infoAdmin WHERE idUsuario = ?";
+                    $datos = array($this->id);
+                    $data = $this->save($sql, $datos);
+                    break;
+                case 2:
+                    // Primero elimino el registro que ya estaba en la tabla
+                    $sql = "DELETE FROM infoDoc WHERE idUsuario = ?";
+                    $datos = array($this->id);
+                    $data = $this->save($sql, $datos);
+                    break;
+                case 3:
+                    // Primero elimino el registro que ya estaba en la tabla
+                    $sql = "DELETE FROM infoPaci WHERE idUsuario = ?";
+                    $datos = array($this->id);
+                    $data = $this->save($sql, $datos);
+                    break;
+            }
+        }
+
+        // Dependiendo del nuevo id que nos traiga el POST, insertaremos el dato
+        switch ($tipoUsuario) {
+            case 1:
+                $sql2 = "INSERT INTO infoAdmin (idUsuario) VALUES (?)";
+                $datos2 = array($this->id);
+                $data2 = $this->save($sql2, $datos2);
+                break;
+            case 2:
+                $sql2 = "INSERT INTO infoDoc (idUsuario) VALUES (?)";
+                $datos2 = array($this->id);
+                $data2 = $this->save($sql2, $datos2);
+                break;
+            case 3:
+                $sql2 = "INSERT INTO infoPaci (idUsuario) VALUES (?)";
+                $datos2 = array($this->id);
+                $data2 = $this->save($sql2, $datos);
+                break;
+        }
 
         $sql = "UPDATE users SET nombreU = ?, apePat = ?, apeMat = ?, usuario = ?, idTipoUsuario = ? WHERE idUsuario = ?";
         $datos = array($this->nombre, $this->apePat, $this->apeMat, $this->usuario, $this->tipoUsuario, $this->id);
@@ -83,6 +152,13 @@ class UsuariosModel extends Query
         return $data;
     }
 
+    public function getIdUsuario(string $usuario)
+    {
+        $sql = "SELECT idUsuario FROM users WHERE usuario = $usuario";
+        $data = $this->select($sql);
+        return $data;
+    }
+
     public function eliminarUser(int $id)
     {
         $this->id = $id;
@@ -90,6 +166,5 @@ class UsuariosModel extends Query
         $datos = array($this->id);
         $data = $this->save($sql, $datos);
         return $data;
-
     }
 }
