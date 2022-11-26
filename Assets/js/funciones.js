@@ -1,4 +1,7 @@
-let tblUsuarios;
+let tblUsuarios, tblInfoAdmin, tblInfoPaci;
+
+// Usuarios
+
 document.addEventListener("DOMContentLoaded", function () {
   tblUsuarios = $("#tblUsuarios").DataTable({
     ajax: {
@@ -160,3 +163,233 @@ function btnEliminarUser(id) {
   });
 }
 
+// Información de Administradores
+
+document.addEventListener("DOMContentLoaded", function () {
+  tblInfoAdmin = $("#tblInfoAdmin").DataTable({
+    ajax: {
+      url: base_url + "PerfilesAdministradores/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "idInfoAdmin",
+      },
+      {
+        data: "nombreU",
+      },
+      {
+        data: "apePat",
+      },
+      {
+        data: "apeMat",
+      },
+      {
+        data: "experiencia",
+      },
+      {
+        data: "acciones",
+      },
+    ],
+  });
+});
+
+function btnEditarInfoAdmin(id) {
+  document.getElementById("title").innerHTML = "Actualizar Info Admin";
+  document.getElementById("btnAccion").innerHTML = "Actualizar";
+  const url = base_url + "PerfilesAdministradores/editar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      document.getElementById("idInfoAdmin").value = res.idInfoAdmin;
+      document.getElementById("experiencia").value = res.experiencia;
+      $("#info_admin").modal("show");
+    }
+  };
+}
+
+function actualizarDatosAdmin(e) {
+  e.preventDefault();
+  const experiencia = document.getElementById("experiencia");
+  if (experiencia.value == "") {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Todos los datos son obligatorios",
+    });
+  } else {
+    const url = base_url + "PerfilesAdministradores/registrar";
+    const frm = document.getElementById("frmInfoAdmin");
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function(){
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        if (res == "modificado") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Datos del administrador actualizados con correctamente",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          frm.reset();
+          $("#info_admin").modal("hide");
+          tblInfoAdmin.ajax.reload();
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: res,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      }
+    }
+  }
+}
+
+// Doctores
+
+// Información de doctores
+document.addEventListener("DOMContentLoaded", function () {
+  tblInfoDoc = $("#tblInfoDoc").DataTable({
+    ajax: {
+      url: base_url + "PerfilesMedicos/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "idInfoDoc",
+      },
+      {
+        data: "nombreU",
+      },
+      {
+        data: "apePat",
+      },
+      {
+        data: "apeMat",
+      },
+      {
+        data: "especialidad",
+      },
+      {
+        data: "cedulaProfesional",
+      },
+      {
+        data: "nombre",
+      },
+      {
+        data: "acciones",
+      },
+    ],
+  });
+});
+
+function btnEditarInfoDoc(id) {
+  document.getElementById("title").innerHTML = "Actualizar Información del Doctor";
+  document.getElementById("btnAccion").innerHTML = "Actualizar";
+  const url = base_url + "PerfilesMedicos/editar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      document.getElementById("idInfoDoc").value = res.idInfoDoc;
+      document.getElementById("especialidad").value = res.especialidad;
+      document.getElementById("cedulaProfesional").value = res.cedulaProfesional;
+      document.getElementById("turno").value = res.idTurno;
+      $("#info_medic").modal("show");
+    }
+  };
+}
+
+function actualizarDatosMedic(e) {
+  e.preventDefault();
+  const especialidad = document.getElementById("especialidad");
+  const cedulaProfesional = document.getElementById("cedulaProfesional");
+  const turno = document.getElementById("turno");
+  if (especialidad.value == "" || cedulaProfesional == "" || turno == "") {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Todos los datos son obligatorios",
+    });
+  } else {
+    const url = base_url + "PerfilesMedicos/registrar";
+    const frm = document.getElementById("frmInfoDoc");
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function(){
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        if (res == "modificado") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Datos del doctor actualizados con correctamente",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          frm.reset();
+          $("#info_medic").modal("hide");
+          tblInfoDoc.ajax.reload();
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: res,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      }
+    }
+  }
+}
+
+// Pacientes
+
+// Información de pacientes
+document.addEventListener("DOMContentLoaded", function () {
+  tblInfoPaci = $("#tblInfoPaci").DataTable({
+    ajax: {
+      url: base_url + "PerfilesPacientes/listar",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        data: "idInfoPaci",
+      },
+      {
+        data: "nombreU",
+      },
+      {
+        data: "apePat",
+      },
+      {
+        data: "apeMat",
+      },
+      {
+        data: "fechaNacimiento",
+      },
+      {
+        data: "peso",
+      },
+      {
+        data: "tipoSangre",
+      },
+      {
+        data: "acciones",
+      },
+    ],
+  });
+});

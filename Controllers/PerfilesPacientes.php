@@ -16,5 +16,16 @@ class PerfilesPacientes extends Controller
         }
     }
 
+    public function listar()
+    {
+        $data = $this->model->getPerfilesPacientes();
+        for ($i=0; $i < count($data); $i++) { 
+            $data[$i]["acciones"] = '<div>
+            <button class="btn btn-primary" type="button" onclick="btnEditarInfoPaci(' . $data[$i]['idInfoPaci'] . ');"><i class="fas fa-edit"></i></button>';
+        }
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
     
 }

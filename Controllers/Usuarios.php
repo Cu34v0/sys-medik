@@ -73,7 +73,7 @@ class Usuarios extends Controller
         $id = $_POST['id'];
 
         if (empty($nombre) || empty($apePat) || empty($apeMat) || empty($usuario)  || empty($tipoUsuario)) {
-            $msg = "Todos los campos son obligatorios msg desde el backend";
+            $msg = "Todos los campos son obligatorios";
         } else {
             if ($id == "") {
                 if ($clave != $confirmar) {

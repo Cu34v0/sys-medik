@@ -54,14 +54,14 @@ class UsuariosModel extends Query
                     $data2 = $this->save($sql2, $datos2);
                     break;
                 case 2:
-                    $sql2 = "INSERT INTO infoDoc (idUsuario) VALUES (?)";
+                    $sql2 = "INSERT INTO infoDoc (idUsuario, idTurno) VALUES (?, 1)";
                     $datos2 = array($idUsuario["idUsuario"]);
                     $data2 = $this->save($sql2, $datos2);
                     break;
                 case 3:
                     $sql2 = "INSERT INTO infoPaci (idUsuario) VALUES (?)";
                     $datos2 = array($idUsuario["idUsuario"]);
-                    $data2 = $this->save($sql2, $datos);
+                    $data2 = $this->save($sql2, $datos2);
                     break;
             }
 
@@ -112,26 +112,27 @@ class UsuariosModel extends Query
                     $data = $this->save($sql, $datos);
                     break;
             }
+            // Dependiendo del nuevo id que nos traiga el POST, insertaremos el dato
+            switch ($tipoUsuario) {
+                case 1:
+                    $sql2 = "INSERT INTO infoAdmin (idUsuario) VALUES (?)";
+                    $datos2 = array($this->id);
+                    $data2 = $this->save($sql2, $datos2);
+                    break;
+                case 2:
+                    $sql2 = "INSERT INTO infoDoc (idUsuario) VALUES (?)";
+                    $datos2 = array($this->id);
+                    $data2 = $this->save($sql2, $datos2);
+                    break;
+                case 3:
+                    $sql2 = "INSERT INTO infoPaci (idUsuario) VALUES (?)";
+                    $datos2 = array($this->id);
+                    $data2 = $this->save($sql2, $datos2);
+                    break;
+            }
         }
 
-        // Dependiendo del nuevo id que nos traiga el POST, insertaremos el dato
-        switch ($tipoUsuario) {
-            case 1:
-                $sql2 = "INSERT INTO infoAdmin (idUsuario) VALUES (?)";
-                $datos2 = array($this->id);
-                $data2 = $this->save($sql2, $datos2);
-                break;
-            case 2:
-                $sql2 = "INSERT INTO infoDoc (idUsuario) VALUES (?)";
-                $datos2 = array($this->id);
-                $data2 = $this->save($sql2, $datos2);
-                break;
-            case 3:
-                $sql2 = "INSERT INTO infoPaci (idUsuario) VALUES (?)";
-                $datos2 = array($this->id);
-                $data2 = $this->save($sql2, $datos);
-                break;
-        }
+
 
         $sql = "UPDATE users SET nombreU = ?, apePat = ?, apeMat = ?, usuario = ?, idTipoUsuario = ? WHERE idUsuario = ?";
         $datos = array($this->nombre, $this->apePat, $this->apeMat, $this->usuario, $this->tipoUsuario, $this->id);
