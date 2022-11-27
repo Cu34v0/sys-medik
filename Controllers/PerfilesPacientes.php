@@ -27,5 +27,30 @@ class PerfilesPacientes extends Controller
         die();
     }
 
-    
+    public function editar(int $id)
+    {
+        $data = $this->model->editarInfoPaci($id);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function registrar()
+    {
+        $id = $_POST["idInfoPaci"];
+        $fechaNacimiento = $_POST["fechaNacimiento"];
+        $peso = $_POST["peso"];
+        $tipoSangre = $_POST["tipoSangre"];
+
+        if (empty($fechaNacimiento) || empty($peso) || empty($tipoSangre)) {
+            $msg = "Todos los datos son obligatorios";
+        } else {
+            $data = $this->model->actualizarInfoPaci($fechaNacimiento, $peso, $tipoSangre, $id);
+            if ($data == "modificado") {
+                $msg = "modificado";
+            } else {
+                $msg = "Error al actualizar los datos";
+            }
+            echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+        }
+    }
 }

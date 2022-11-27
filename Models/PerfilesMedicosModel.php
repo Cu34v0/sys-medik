@@ -41,7 +41,7 @@ class PerfilesMedicosModel extends Query{
         if ($data == 1) {
             $res = "modificado";
         } else {
-            $res = "erro";
+            $res = "error";
         }
         return $res;
         

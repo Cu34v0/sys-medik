@@ -335,7 +335,7 @@ function actualizarDatosMedic(e) {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Datos del doctor actualizados con correctamente",
+            title: "Datos del doctor actualizados correctamente",
             showConfirmButton: false,
             timer: 2000,
           });
@@ -393,3 +393,68 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
   });
 });
+
+// Ordenar los datos que ya se tienen
+function btnEditarInfoPaci(id) {
+  document.getElementById("title").innerHTML = "Actualizar Información del paciente";
+  document.getElementById("btnAccion").innerHTML = "Actualizar";
+  const url = base_url + "PerfilesPacientes/editar/" + id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200) {
+      const res = JSON.parse(this.responseText);
+      document.getElementById("idInfoPaci").value = res.idInfoPaci;
+      document.getElementById("fechaNacimiento").value = res.fechaNacimiento;
+      document.getElementById("peso").value = res.peso;
+      document.getElementById("tipoSangre").value = res.tipoSangre;
+      $("#info_paci").modal("show");
+    }
+  }
+}
+
+function actualizarDatosPaci(e) {
+  e.preventDefault();
+  const fechaNacimiento = document.getElementById("fechaNacimiento");
+  const peso = document.getElementById("peso");
+  const tipoSangre = document.getElementById("tipoSangre");
+  if (fechaNacimiento.value == "" || peso.value == "" || tipoSangre.value == "") {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Todos los datos son obligatorios",
+    });
+  } else {
+    const url = base_url + "PerfilesPacientes/registrar";
+    const frm = document.getElementById("frmInfoPaci");
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        if (res == "modificado") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Datos del paciente actualizados correctamente",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          frm.reset();
+          $("#info_paci").modal("hide");
+          tblInfoPaci.ajax.reload();
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: res,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      }
+    }
+  }
+}

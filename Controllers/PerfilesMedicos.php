@@ -20,7 +20,7 @@ class PerfilesMedicos extends Controller
     public function listar()
     {
         $data = $this->model->getPerfilesDoctores();
-        for ($i=0; $i < count($data); $i++) { 
+        for ($i = 0; $i < count($data); $i++) {
             $data[$i]["acciones"] = '<div>
             <button class="btn btn-primary" type="button" onclick="btnEditarInfoDoc(' . $data[$i]['idInfoDoc'] . ');"><i class="fas fa-edit"></i></button>';
         }
@@ -45,10 +45,7 @@ class PerfilesMedicos extends Controller
                 $msg = "Error al actualizar los datos";
             }
             echo json_encode($msg, JSON_UNESCAPED_UNICODE);
-            
-
         }
-        
     }
 
     public function editar(int $id)
@@ -57,6 +54,4 @@ class PerfilesMedicos extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-
-    
 }
