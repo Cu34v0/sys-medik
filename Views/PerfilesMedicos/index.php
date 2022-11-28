@@ -31,7 +31,14 @@
                             <div class="col-md-6">
                                 <label for="especialidad">Especialidad</label>
                                 <input type="hidden" id="idInfoDoc" name="idInfoDoc">
-                                <input id="especialidad" class="form-control text-center fw-bold" type="text" name="especialidad" placeholder="Especialidad" autocomplete="off">
+                                <select id="especialidad" class="form-select text-center fw-bold" name="especialidad">
+                                    <option selected disabled>Seleccione una especialidad</option>
+                                    <?php foreach ($data['especialidades'] as $row) { ?>
+
+                                        <option value="<?php echo $row['idEspecialidad']; ?>"><?php echo $row['nombreEspecialidad']; ?></option>
+
+                                    <?php } ?>
+                                </select>
                             </div>
 
                             <div class="col-md-6">
@@ -47,7 +54,7 @@
                             <div class="col-md-6">
                                 <label for="turno">Turno</label>
                                 <select id="turno" class="form-control text-center fw-bold" name="turno">
-                                    <!-- <option selected="true" disabled="disabled">Seleccione una opcion</option> -->
+                                    <option selected disabled>Seleccione una turno</option>
                                     <?php foreach ($data['turnos'] as $row) { ?>
 
                                         <option value="<?php echo $row['idTurno']; ?>"><?php echo $row['nombre']; ?></option>

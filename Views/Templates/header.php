@@ -32,7 +32,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Configuración</a></li>
+                    <li><a class="dropdown-item" href="<?php echo base_url; ?>CambioPass">Cambio de contraseña</a></li>
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
@@ -66,6 +66,20 @@
                         </div>
 
                         <!-- Aquí irán los siguientes elementos -->
+                        <a class="nav-link text-success" href="<?php echo base_url ?>Especialidades">
+                            <div class="fa-solid fa-hand-holding-medical mx-2"><i class="fa-solid fa-hand-holding-medical"></i></div>
+                            Especialidades
+                        </a>
+
+                        <a class="nav-link text-success" href="<?php echo base_url ?>SolicitudConsulta">
+                            <div class="fa-solid fa-briefcase-medical mx-2"><i class="fas fa-tachometer-alt"></i></div>
+                            Solicitud de consulta
+                        </a>
+
+                        <a class="nav-link text-success" href="<?php echo base_url ?>Citas">
+                            <div class="fa-solid fa-hospital-user mx-2"><i class="fas fa-tachometer-alt"></i></div>
+                            Citas
+                        </a>
 
                     </div>
                 </div>

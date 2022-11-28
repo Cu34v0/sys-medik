@@ -1,5 +1,5 @@
 <?php
-class CitasModel{
+class CitasModel extends Query{
     public function __construct()
     {
         

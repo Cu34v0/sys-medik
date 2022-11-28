@@ -9,7 +9,7 @@ class Usuarios extends Controller
 
     public function index()
     {
-        if (($_SESSION['activo']) && $_SESSION['tipoUsuario'] == 'Administrador') {
+        if (($_SESSION['activo'])) {
             $data['tipoUsuarios'] = $this->model->getTiposUsuarios();
             $this->views->getView($this, "index", $data);
         } else {

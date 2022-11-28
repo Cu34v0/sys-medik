@@ -9,12 +9,12 @@ class PerfilesMedicos extends Controller
 
     public function index()
     {
-        if (($_SESSION['activo']) && $_SESSION['tipoUsuario'] == 'Administrador') {
-            $data["turnos"] = $this->model->getTurnos();
-            $this->views->getView($this, "index", $data);
-        } else {
+        if (empty($_SESSION["activo"])) {
             header('Location: ' . base_url);
         }
+        $data["turnos"] = $this->model->getTurnos();
+        $data["especialidades"] = $this->model->getEspecialidades();
+        $this->views->getView($this, "index", $data);
     }
 
     public function listar()

@@ -1,6 +1,6 @@
 <?php
 class PerfilesMedicosModel extends Query{
-    private $especialidad, $cedulaProfesional, $turno, $id;
+    private $idEspecialidad, $cedulaProfesional, $turno, $id;
     public function __construct()
     {
         parent::__construct();
@@ -8,7 +8,7 @@ class PerfilesMedicosModel extends Query{
 
     public function getPerfilesDoctores()
     {
-        $sql = "SELECT * FROM users u, infoDoc id, turnos tu WHERE u.idUsuario = id.idUsuario AND id.idTurno = tu.idTurno;
+        $sql = "SELECT * FROM users u, infoDoc id, turnos tu, especialidades es WHERE u.idUsuario = id.idUsuario AND id.idTurno = tu.idTurno AND id.idEspecialidad = es.idEspecialidad;
         ";
         $data = $this->selectAll($sql);
         return $data;
@@ -21,6 +21,13 @@ class PerfilesMedicosModel extends Query{
         return $data;
     }
 
+    public function getEspecialidades()
+    {
+        $sql = "SELECT * FROM especialidades";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
+
     public function editarInfoDoc(int $id)
     {
         $sql = "SELECT * FROM infoDoc WHERE idInfoDoc = $id";
@@ -28,15 +35,15 @@ class PerfilesMedicosModel extends Query{
         return $data;
     }
 
-    public function actualizarInfoMedic(string $especialidad, string $cedulaProfesional, int $turno, int $id)
+    public function actualizarInfoMedic(int $idEspecialidad, string $cedulaProfesional, int $turno, int $id)
     {
-        $this->especialidad = $especialidad;
+        $this->idEspecialidad = $idEspecialidad;
         $this->cedulaProfesional = $cedulaProfesional;
         $this->turno = $turno;
         $this->id = $id;
 
-        $sql = "UPDATE infoDoc SET especialidad = ?, cedulaProfesional = ?, idTurno = ? WHERE idInfoDoc = ?";
-        $datos = array($this->especialidad, $this->cedulaProfesional, $this->turno, $this->id);
+        $sql = "UPDATE infoDoc SET idEspecialidad = ?, cedulaProfesional = ?, idTurno = ? WHERE idInfoDoc = ?";
+        $datos = array($this->idEspecialidad, $this->cedulaProfesional, $this->turno, $this->id);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = "modificado";
