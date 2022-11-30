@@ -27,4 +27,25 @@ class SolicitudConsulta extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
+
+    public function registrar()
+    {
+        $idUsuario = $_SESSION['idUsuario'];
+        $fechaSolicitud = $_POST["fechaSolicitud"];
+        $especialidad = $_POST["especialidad"];
+        if (empty($fechaSolicitud) || empty($especialidad)) {
+            $msg = "Todos los datos son obligatorios";
+        } else {
+            $data = $this->model->registrarCita($idUsuario, $fechaSolicitud, $especialidad);
+            if ($data == "ok") {
+                $msg = "si";
+            } else {
+                $msg = "Error al registrar al nuevo usuario";
+            }
+            
+        }
+         // Respuesta de la operación
+         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+         die();
+    }
 }

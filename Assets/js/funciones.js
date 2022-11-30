@@ -704,3 +704,47 @@ function frmSolicitudConsulta() {
   $("#nueva_solicitud").modal("show");
   document.getElementById("id").value = "";
 }
+
+function registrarSolicitud(e) {
+  e.preventDefault();
+  const fechaSolicitud = document.getElementById("fechaSolicitud");
+  const especialidad = document.getElementById("especialidad");
+  if (fechaSolicitud.value == "" || especialidad.value == "") {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Todos los datos son obligatorios",
+    });
+  } else {
+    const url = base_url + "SolicitudConsulta/registrar";
+    const frm = document.getElementById("frmSolicitudConsulta");
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        if (res == "si") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Especialidad registrada con éxito",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          frm.reset();
+          $("#nueva_solicitud").modal("hide");
+          tblSolicitudConsultas.ajax.reload();
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: res,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      }
+    }
+  }
+}
