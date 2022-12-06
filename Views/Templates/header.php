@@ -76,11 +76,6 @@
                             Solicitud de consulta
                         </a>
 
-                        <a class="nav-link text-success" href="<?php echo base_url ?>Citas">
-                            <div class="fa-solid fa-hospital-user mx-2"><i class="fas fa-tachometer-alt"></i></div>
-                            Citas
-                        </a>
-
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
